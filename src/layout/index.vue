@@ -204,7 +204,7 @@ export default {
           // console.log(this.$route.meta.title)
         }
       }
-      this.search_condition([])
+      this.$store.commit('home/search_condition', [])
       if (!isNaN(Number(key))) {
         this.selectDiseaseId = key
         this.$router.push({
