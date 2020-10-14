@@ -1,7 +1,7 @@
 function watermark (waterMarkTxt, className) { // 水印
   var watermarkdivs = []
   // 加载水印
-  var loadMark = function (settings) {
+  var loadMark = function () {
     var defaultSettings = {
       watermark_txt: waterMarkTxt,
       watermark_x: -2, // 水印起始位置x轴坐标
