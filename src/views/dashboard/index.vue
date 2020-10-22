@@ -57,6 +57,11 @@ export default {
       // 改名
     }
   },
+  created(){
+    this.$axios.get('/mock/news').then(res=>{
+      console.log(res)
+    })
+  },
   methods:{
     clickHandle(){
     // XiaLogin.init()

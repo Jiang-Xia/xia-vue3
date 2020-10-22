@@ -10,8 +10,7 @@ import '@/utils/rem.js'
 import '@/styles/base.scss'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import './permission'
-// import './import'
-
+import '@/mock'
 /*
   解决点解当前路由报错
 */
@@ -31,6 +30,8 @@ app.use(Antd).use(store).use(router).mount('#app')
   常用方法挂载
 */
 import { getToken } from '@/utils/cookie'
+import axios from '@/utils/request'
 app.config.devtools = true    
 app.config.globalProperties.$getToken = getToken
+app.config.globalProperties.$axios = axios
 

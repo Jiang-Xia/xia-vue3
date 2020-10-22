@@ -39,15 +39,16 @@ $axios.interceptors.response.use(
     // closeLoading()
     // console.log(response.data)
     const status = response.status
-    const code = response.data.code
+    // const code = response.data.code
     if ((status >= 200 && status < 300) || status === 304) {
       // const pollingStatus = response.data.data.status
-      if (code === '00000') {
-        return Promise.resolve(response.data)
-      } else {
-        errorMsg(response.data.msg)
-        return Promise.reject(new Error(response.data || 'Error'))
-      }
+      return Promise.resolve(response.data)
+      // if (code === '00000') {
+      //   return Promise.resolve(response.data)
+      // } else {
+      //   errorMsg(response.data.msg)
+      //   return Promise.reject(new Error(response.data || 'Error'))
+      // }
     } else {
       return Promise.reject(response)
     }
@@ -68,15 +69,6 @@ $axios.interceptors.response.use(
 
             removeToken()
             removeInfo()
-            const code = getCode()
-            if (code === 'gyfy_117') {
-              location.href = 'https://www.elungcare.com/sso/logout'
-            } else {
-              // router.replace({
-              //   name: 'Index'
-              // })
-              // showXiaLogin()
-            }
           } else {
             errorMsg(data.msg)
           }
