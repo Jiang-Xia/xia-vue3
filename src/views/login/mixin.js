@@ -29,7 +29,7 @@ const loginMixins = {
               this.token = this.$getToken()
               this.loginVisible = false
               setTimeout(() => {
-                const path = this.$route.query.redirect || '/home'
+                const path = this.$route.query.redirect || '/dashboard'
                 this.$router.push(path)
               }, 2000)
             } else {

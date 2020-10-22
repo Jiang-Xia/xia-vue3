@@ -68,49 +68,9 @@
 </template>
 <script>
 import {MenuUnfoldOutlined,MenuFoldOutlined} from '@ant-design/icons-vue'
-// import router from 'vue-router'
 import { getToken, getInfo } from '@/utils/cookie'
-import storage from '@/utils/storage'
-import * as request from '@/api/home'
-import { globalConfigs } from '@/api/common'
-const navlist =[
-  {
-    path: '/home',
-    icon: 'el-icon-location',
-    cn: '基础数据'
-  },
-  {
-    path: '/diseases',
-    icon: 'el-icon-menu',
-    cn: '专病数据',
-    submenu:[]
-  },
-  {
-    path: '/export',
-    icon: 'el-icon-setting',
-    cn: '数据导出'
-  },
-  {
-    path: '/research',
-    icon: 'el-icon-document',
-    cn: '科研项目'
-  },
-  // {
-  //   path: '/models',
-  //   icon: 'el-icon-postcard',
-  //   cn: '模型管理'
-  // },
-  // {
-  //   path: '/statistics',
-  //   icon: 'el-icon-s-data',
-  //   cn: '数据统计'
-  // },
-  {
-    path: '/profile',
-    icon: 'el-icon-setting',
-    cn: '个人中心'
-  }
-]
+import { mapGetters } from 'vuex'
+
 export default {
   components: {
     MenuUnfoldOutlined,
@@ -120,7 +80,6 @@ export default {
     return{
     selectedKeys : ['1'],
     collapsed : false,
-    navlist : navlist,
     truename : '',
     sysTitle : '',
     disease_list: [],
@@ -128,13 +87,22 @@ export default {
     }
   },
   computed:{
-       newNavlist () {
-    const list = this.navlist
+     ...mapGetters([
+      'permission_routes'
+    ]),
+    newNavlist () {
+    const list = this.permission_routes.filter(v => !v.hidden)
+        .map(v => {
+          return {
+            path: v.path,
+            cn: v.meta.title
+          }
+        })
     const plist= this.disease_list
     // console.log(plist)
     const token = 'getToken()'
     if (!token) {
-      return list.filter(v => v.path === '/home')
+      return list.filter(v => v.path === '/dashboard')
     } else {
       return list.map(v => {
         if (v.path === '/diseases'&&plist.length) {
@@ -176,19 +144,19 @@ export default {
     created () {
     const info = getInfo()
     const token = getToken()
-    globalConfigs().then((res) => {
-      const config = res.data
-      storage.local.set('global_config', res.data)
-      document.title = config.site_config.global_site_title
-      this.sysTitle = config.site_config.global_site_name
-    })
+    // globalConfigs().then((res) => {
+    //   const config = res.data
+    //   storage.local.set('global_config', res.data)
+    //   document.title = config.site_config.global_site_title
+    //   this.sysTitle = config.site_config.global_site_name
+    // })
     // console.log(info)
-    if (token) {
-      this.truename = info.truename
-      request.userResource({}, 'disease_list').then((res) => {
-        this.disease_list = res.data.result.disease_list
-      })
-    }
+    // if (token) {
+    //   this.truename = info.truename
+    //   request.userResource({}, 'disease_list').then((res) => {
+    //     this.disease_list = res.data.result.disease_list
+    //   })
+    // }
   },
   methods:{
      handleSelect({ item={}, key ='', keyPath=[],selectedKeys=[] }) {

@@ -71,7 +71,7 @@ export default {
         if (res) {
         // 重定向或者首页
           this.$message.success('登录成功')
-          this.$router.push('/home')
+          this.$router.push('/dashboard')
         } else {
           this.$message.error('登录失败')
           location.href = 'https://www.elungcare.com/sso/logout'

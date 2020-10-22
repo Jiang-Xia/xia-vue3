@@ -41,7 +41,7 @@ router.beforeEach(async(to, from, next) => {
     // 已登录
     // console.log('已登录', store.getters.roles)
     if (to.path === '/login') {
-      next({ path: '/home' })
+      next({ path: '/dashboard' })
       NProgress.done()
     } else {
       const hasRoles = store.getters.roles && store.getters.roles.length > 0
