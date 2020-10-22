@@ -1,6 +1,9 @@
 <template>
   <div class="login-component-container">
-    <!-- <component :is="currentComponent" /> -->
+    <component
+      :is="currentComponent"
+      v-if="code"
+    />
   </div>
 </template>
 
@@ -9,51 +12,53 @@
 * 中转页面
 *
 */
-// import defaultComponent from './index-default.vue'
-import { getToken } from '@/utils/cookie'
+import DefaultComponent from './index-dialog'
+import SzeyComponent from './index-szey'
 export default {
-  beforeRouteEnter: (to, from, next) => {
-    next((that) => {
-      if (getToken()) {
-        that.$router.push('/index')
-      }
-    })
+  components: {
+    DefaultComponent,
+    SzeyComponent
   },
   data() {
     return {
       code: ''
     }
   },
+  // beforeRouteEnter: (to, from, next) => {
+  //   next((that) => {
+  //     if (getToken()) {
+  //       console.log('==========', to)
+  //       that.$router.push('/index')
+  //     }
+  //   })
+  // },
   computed: {
     currentComponent() {
       const code = this.code
-      let component = null
-      switch (code) {
-        case 'demo_000':
-          component = 'defaultComponent'
-          break
-        default:
-          // 空值不渲染s
-          component = ''
-          break
+      const obj = {
+        demo_000: 'DefaultComponent',
+        szey_115: 'SzeyComponent'
       }
-      return component
+      return obj[code]
     }
   },
   created() {
-    const code = this.$getCode()
-    this.code = code
-    switch (code) {
-      case 'gyfy_117':
-        this.gyfyLoginHandle()
-        break
-      default:
-        this.defaultLoginHandle()
-        break
-    }
+    this.$store.dispatch('user/getGlobalConfigs').then(() => {
+      console.log(3333333333333)
+      const code = this.$store.getters.hospCode
+      this.code = code
+      const obj = {
+        demo_000: this.defaultLoginHandle,
+        gyfy_117: this.gyfyLoginHandle,
+        szey_115: this.szeyLoginHandle
+      }
+      obj[code] && obj[code]()
+    })
   },
   methods: {
     defaultLoginHandle() {
+    },
+    szeyLoginHandle() {
     },
     gyfyLoginHandle() {
       const service_url = location.protocol + '//' + location.host + location.pathname + 'login'
@@ -66,7 +71,6 @@ export default {
         if (res) {
         // 重定向或者首页
           this.$message.success('登录成功')
-          await this.$store.dispatch('user/getUserInfo')
           this.$router.push('/home')
         } else {
           this.$message.error('登录失败')

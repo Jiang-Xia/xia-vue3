@@ -1,13 +1,8 @@
 <template>
   <div class="login-container">
-    <div class="title">{{ sysTitle }}</div>
-    <img class="img-wrap img-wrap1" src="@/views/login/img/triangle1.png" alt="icon">
-    <img class="img-wrap img-wrap2" src="@/views/login/img/triangle1.png" alt="icon">
-    <img class="img-wrap img-wrap3" src="@/views/login/img/triangle1.png" alt="icon">
-    <img class="img-wrap img-wrap4" src="@/views/login/img/triangle1.png" alt="icon">
-    <img class="img-wrap computer" src="@/views/login/img/computer.png" alt="icon">
-
-    <section class="login-content center">
+    <section class="img-wrap"><img src="./img/logo_szdermyy_white.png" alt=""></section>
+    <section class="login-content">
+      <h2 class="title">{{ sysTitle }}</h2>
       <el-form ref="loginForm" :model="loginForm" :rules="loginrules" class="loginForm">
         <el-form-item prop="username">
           <i class="el-icon-user" />
@@ -62,42 +57,31 @@ export default {
 @import "~@/styles/scss/_mixins";
 .login-container {
   background-color: #fff;
-  background-image: url(./img/mask.png);
+  background-image:linear-gradient(to right, #1DE4FF, #08D8BE);
   background-size: 100% 100%;
   min-height: 100%;
   width: 100%;
   overflow: hidden;
   position: relative;
-  .title{
-    display: flex;
-    align-items: center;
-    font-size: 30px;
-    color: #fff;
-    letter-spacing: 3px;
-    padding-left: 8rem;
-  }
   .img-wrap{
+    img{
+      height: 100%;
+      width: 100%;
+    }
     position: absolute;
+    top: 50%;
+    left: 13.5rem;
+    width: 31.65rem;
+    height: 13.8rem;
+    transform: translate(0, -50%);
   }
-  .img-wrap1{
-    bottom: 9.5rem;
-    left: 11rem;
-    transform: scale(1.5);
-  }
-  .img-wrap2{
-    bottom: 5rem;
-    left: 4rem;
-    transform: scale(1.2);
-  }
-  .img-wrap3{
-    top: 8.5rem;
-    right: 22rem;
-    transform: scale(1);
-  }
-  .img-wrap4{
-    top: 4rem;
-    right: 19.5rem;
-    transform: scale(0.6);
+  .title{
+    margin-top: .5rem;
+    text-align: center;
+    font-size: 1.5rem;
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: 600;
+    letter-spacing: 3px;
   }
   .computer{
     bottom: 2.5rem;
@@ -105,21 +89,21 @@ export default {
   }
   .login-content {
     position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
+    top: 50%;
+    right: 10rem;
+    width: 30rem;
+    height: 21.7rem;
+    transform: translate(0,-50%);
+    background: #fff;
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
     z-index: 1;
+    .el-icon-user,.el-icon-lock{
+      color: rgba(0, 0, 0, 0.5);
+    }
     .loginForm {
       position: relative;
-      background-color: #fff;
-      border-radius: .8rem;
-      width: 27rem;
-      height: 21rem;
-      max-width: 460px;
-      max-height: 340px;
-      padding: 2rem 2rem 0 2rem;
-      margin-left: 8rem;
-      margin-bottom: 4rem;
+
       overflow: hidden;
       .loginbutton {
         width: 70%;
@@ -131,6 +115,8 @@ export default {
         cursor: pointer;
         color: #fff;
         font-size: 1.2rem;
+        border-color: transparent;
+        background-image: linear-gradient(90deg, rgba(81,193,203,0.84) 0%, rgba(13,192,118,0.84) 100%);
       }
     }
   }

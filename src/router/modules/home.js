@@ -12,8 +12,7 @@ const Home = {
   children: [
     {
       path: 'result-query',
-
-      props: true,
+      name:'HomeResultQuery',
       component: () => import('@/views/home/index.vue'),
       meta: {
         activeMenu: '/home'
