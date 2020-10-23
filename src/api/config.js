@@ -2,7 +2,7 @@
 const getConfig = () => {
   const config = {}
   for (const k in window.BASECONFIG) {
-    config[k] = window.BASECONFIG[k]
+    config[k] = ''
   }
   return config
 }
