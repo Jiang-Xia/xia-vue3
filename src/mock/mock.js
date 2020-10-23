@@ -9,14 +9,19 @@ export const globalConfigs = function () {
   }
   return data
 }
+const userList = []
 // 获取token
 export const makeToken = function () {
     const data = {
-        access_token: "UGZQQVNzdEpWcUhXSHg2OHNENXlmZ2ZvNzU2c2VadEFUR2t5cjNNNDc1NHdkUEVRM0N0MkxiYkR1c21TU1hOcA",
+        access_token: "123",
         expires_in: 42899,
         token_type: "Bearer"
     }
     return data
+}
+// 退出
+export const destoryToken = function () {
+  return true
 }
 // 用户信息
 export const tokenProfile = function () {

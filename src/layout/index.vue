@@ -57,6 +57,40 @@
           class="trigger"
           @click="() => (collapsed = !collapsed)"
         />
+
+        <div class="user-wrap">
+          <a-avatar
+            size="large"
+            style="margin-right:12px;"
+          >
+            <template #icon>
+              <UserOutlined />
+            </template>
+          </a-avatar>
+          <a-dropdown>
+            <a
+              class="ant-dropdown-link"
+              @click="e => e.preventDefault()"
+            >{{ userInfo.truename }}<DownOutlined /></a>
+
+            <template #overlay>
+              <a-menu>
+                <a-menu-item>
+                  <a
+                    href="javascript:;"
+                    @click="commandHandle(1)"
+                  >个人中心</a>
+                </a-menu-item>
+                <a-menu-item>
+                  <a
+                    href="javascript:;"
+                    @click="commandHandle(2)"
+                  >退出</a>
+                </a-menu-item>
+              </a-menu>
+            </template>
+          </a-dropdown>
+        </div>
       </a-layout-header>
       <a-layout-content
         :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
@@ -88,7 +122,8 @@ export default {
   },
   computed:{
      ...mapGetters([
-      'permission_routes'
+      'permission_routes',
+      'userInfo'
     ]),
     newNavlist () {
     const list = this.permission_routes.filter(v => !v.hidden)
@@ -188,7 +223,46 @@ export default {
         })
       }
       return
-    }
+    },
+        // 头像下拉命令
+    commandHandle(v) {
+      if (v === 2) {
+        this.logoutHandle()
+      } else {
+        this.$router.push('/profile')
+      }
+    },
+    // 退出登录
+    async logoutHandle() {
+      console.log(this)
+      this.$store.dispatch('user/logout').then(res => {
+        this.$confirm({
+          title:'退出',
+          content: '退出成功',
+          showCancelButton: false,
+          okText:'确认',
+          cancelText:' ',
+          closable:false,
+          showClose: false,
+          onOk: () => {
+            this.logoutRedirectControl()
+          }
+        } )
+      })
+    },
+    // 退出跳转控制
+    logoutRedirectControl() {
+      const code = this.$getCode()
+      this.token = ''
+      switch (code) {
+        case 'gyfy_117' :
+          location.href = 'https://www.elungcare.com/sso/logout'
+          break
+        default:
+          location.reload()
+          break
+      }
+    },
   }
 }
 </script>
@@ -213,6 +287,11 @@ export default {
     text-align: center;
     line-height: 32px;
     color: #fff;
+  }
+  .user-wrap{
+    height: 100%;
+    float: right;
+    padding-right: 24px;
   }
 }
 </style>

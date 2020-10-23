@@ -34,4 +34,5 @@ import axios from '@/utils/request'
 app.config.devtools = true    
 app.config.globalProperties.$getToken = getToken
 app.config.globalProperties.$axios = axios
+app.config.globalProperties.log = console.log
 

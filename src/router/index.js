@@ -41,8 +41,8 @@ export const asyncRoutes = [
   { path: '/:pathMatch(.*)', redirect: '/404', hidden: true }
 ]
 export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher
+  // const newRouter = createRouter()
+  // router.matcher = newRouter.matcher
 }
 const router = createRouter({
   history: createWebHashHistory(),
