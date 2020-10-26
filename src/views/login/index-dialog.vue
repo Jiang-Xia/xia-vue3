@@ -4,7 +4,10 @@
     :visible="loginVisible"
     class="xia-dialog-login"
     :modal="modal"
+    ok-text="登录"
+    cancel-text="取消"
     @cancel="closeHandle"
+    @ok="tologinForm('loginForm')"
   >
     <a-form
       ref="loginForm"
@@ -43,15 +46,6 @@
             style="color:rgba(0,0,0,.25)"
           />
         </a-input>
-      </a-form-item>
-      <a-form-item>
-        <a-button
-          type="primary"
-          :disabled="loginForm.username === '' || loginForm.password === ''"
-          @click="tologinForm('loginForm')"
-        >
-          登 录
-        </a-button>
       </a-form-item>
     </a-form>
   </a-modal>

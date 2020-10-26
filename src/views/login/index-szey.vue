@@ -1,19 +1,46 @@
 <template>
   <div class="login-container">
-    <section class="img-wrap"><img src="./img/logo_szdermyy_white.png" alt=""></section>
+    <section class="img-wrap">
+      <img
+        src="./img/logo_szdermyy_white.png"
+        alt=""
+      >
+    </section>
     <section class="login-content">
-      <h2 class="title">{{ sysTitle }}</h2>
-      <el-form ref="loginForm" :model="loginForm" :rules="loginrules" class="loginForm">
+      <h2 class="title">
+        {{ sysTitle }}
+      </h2>
+      <el-form
+        ref="loginForm"
+        :model="loginForm"
+        :rules="loginrules"
+        class="loginForm"
+      >
         <el-form-item prop="username">
           <i class="el-icon-user" />
-          <el-input v-model="loginForm.username" type="username" auto-complete="on" />
+          <el-input
+            v-model="loginForm.username"
+            type="username"
+            auto-complete="on"
+          />
         </el-form-item>
         <el-form-item prop="password">
           <i class="el-icon-lock" />
-          <el-input v-model="loginForm.password" type="password" auto-complete="on" @keydown.native.enter="tologinForm('loginForm')" />
+          <el-input
+            v-model="loginForm.password"
+            type="password"
+            auto-complete="on"
+            @keydown.native.enter="tologinForm('loginForm')"
+          />
         </el-form-item>
         <el-form-item>
-          <el-button class="loginbutton" type="primary" @click="tologinForm('loginForm')">登录</el-button>
+          <el-button
+            class="loginbutton"
+            type="primary"
+            @click="tologinForm('loginForm')"
+          >
+            登录
+          </el-button>
         </el-form-item>
       </el-form>
     </section>

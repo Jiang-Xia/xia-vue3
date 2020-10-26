@@ -31,8 +31,12 @@ app.use(Antd).use(store).use(router).mount('#app')
 */
 import { getToken } from '@/utils/cookie'
 import axios from '@/utils/request'
-app.config.devtools = true    
-app.config.globalProperties.$getToken = getToken
-app.config.globalProperties.$axios = axios
-app.config.globalProperties.log = console.log
+import { getCode, getOpenType } from '@/utils/common'
+const globalProperties = app.config.globalProperties
+globalProperties.$getCode = getCode
+globalProperties.$getOpenType = getOpenType
+globalProperties.devtools = true    
+globalProperties.$getToken = getToken
+globalProperties.$axios = axios
+globalProperties.log = console.log
 

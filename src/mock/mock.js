@@ -2,14 +2,23 @@ import Mock from 'mockjs'
 // 全局配置
 export const globalConfigs = function () {
   const data = {
-    "approval_config":{"data_export_approval_is_enable":true},
-    "hosp_config":{"global_hospital_code":"demo_000","global_hospital_name":"演示医院","global_hospital_org_code":"demo_000"},
-    "nav_config":{"nav_charts_is_enable":true,"nav_statistics_is_enable":true},
-    "site_config":{"global_site_name":"科研数据中心","global_site_title":"科研数据中心","patient_detail_open_at_dialog":true},
+    approval_config:{"data_export_approval_is_enable":true},
+    hosp_config:{"global_hospital_code":"demo_000",
+    "global_hospital_name":"演示医院",
+    "global_hospital_org_code":"demo_000"
+  },
+    nav_config:{
+    "nav_charts_is_enable":true,
+    "nav_statistics_is_enable":true
+  },
+    site_config:{
+    "global_site_name":"xia-vue3",
+    "global_site_title":"xia-vue3",
+    "patient_detail_open_at_dialog":true
+  },
   }
   return data
 }
-const userList = []
 // 获取token
 export const makeToken = function () {
     const data = {

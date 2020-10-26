@@ -1,24 +1,66 @@
 <template>
   <div class="login-container">
-    <div class="title">{{ sysTitle }}</div>
-    <img class="img-wrap img-wrap1" src="@/views/login/img/triangle1.png" alt="icon">
-    <img class="img-wrap img-wrap2" src="@/views/login/img/triangle1.png" alt="icon">
-    <img class="img-wrap img-wrap3" src="@/views/login/img/triangle1.png" alt="icon">
-    <img class="img-wrap img-wrap4" src="@/views/login/img/triangle1.png" alt="icon">
-    <img class="img-wrap computer" src="@/views/login/img/computer.png" alt="icon">
+    <div class="title">
+      {{ sysTitle }}
+    </div>
+    <img
+      class="img-wrap img-wrap1"
+      src="@/views/login/img/triangle1.png"
+      alt="icon"
+    >
+    <img
+      class="img-wrap img-wrap2"
+      src="@/views/login/img/triangle1.png"
+      alt="icon"
+    >
+    <img
+      class="img-wrap img-wrap3"
+      src="@/views/login/img/triangle1.png"
+      alt="icon"
+    >
+    <img
+      class="img-wrap img-wrap4"
+      src="@/views/login/img/triangle1.png"
+      alt="icon"
+    >
+    <img
+      class="img-wrap computer"
+      src="@/views/login/img/computer.png"
+      alt="icon"
+    >
 
     <section class="login-content center">
-      <el-form ref="loginForm" :model="loginForm" :rules="loginrules" class="loginForm">
+      <el-form
+        ref="loginForm"
+        :model="loginForm"
+        :rules="loginrules"
+        class="loginForm"
+      >
         <el-form-item prop="username">
           <i class="el-icon-user" />
-          <el-input v-model="loginForm.username" type="username" auto-complete="on" />
+          <el-input
+            v-model="loginForm.username"
+            type="username"
+            auto-complete="on"
+          />
         </el-form-item>
         <el-form-item prop="password">
           <i class="el-icon-lock" />
-          <el-input v-model="loginForm.password" type="password" auto-complete="on" @keydown.native.enter="tologinForm('loginForm')" />
+          <el-input
+            v-model="loginForm.password"
+            type="password"
+            auto-complete="on"
+            @keydown.native.enter="tologinForm('loginForm')"
+          />
         </el-form-item>
         <el-form-item>
-          <el-button class="loginbutton" type="primary" @click="tologinForm('loginForm')">登录</el-button>
+          <el-button
+            class="loginbutton"
+            type="primary"
+            @click="tologinForm('loginForm')"
+          >
+            登录
+          </el-button>
         </el-form-item>
       </el-form>
     </section>

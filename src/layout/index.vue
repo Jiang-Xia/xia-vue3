@@ -6,7 +6,7 @@
       collapsible
     >
       <div class="logo ellipsis">
-        {{ sysTitle }}
+        {{ globalConfigs.site_config.global_site_title }}
       </div>
       <a-menu
         :inline-collapsed="collapsed"
@@ -93,7 +93,7 @@
         </div>
       </a-layout-header>
       <a-layout-content
-        :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
+        :style="{ margin: '24px 16px',background: '#fff', minHeight: '280px' }"
       >
         <router-view />
       </a-layout-content>
@@ -104,7 +104,6 @@
 import {MenuUnfoldOutlined,MenuFoldOutlined} from '@ant-design/icons-vue'
 import { getToken, getInfo } from '@/utils/cookie'
 import { mapGetters } from 'vuex'
-
 export default {
   components: {
     MenuUnfoldOutlined,
@@ -115,7 +114,6 @@ export default {
     selectedKeys : ['1'],
     collapsed : false,
     truename : '',
-    sysTitle : '',
     disease_list: [],
     selectDiseaseId: '',
     }
@@ -123,7 +121,8 @@ export default {
   computed:{
      ...mapGetters([
       'permission_routes',
-      'userInfo'
+      'userInfo',
+      'globalConfigs'
     ]),
     newNavlist () {
     const list = this.permission_routes.filter(v => !v.hidden)
@@ -177,21 +176,6 @@ export default {
   }
   },
     created () {
-    const info = getInfo()
-    const token = getToken()
-    // globalConfigs().then((res) => {
-    //   const config = res.data
-    //   storage.local.set('global_config', res.data)
-    //   document.title = config.site_config.global_site_title
-    //   this.sysTitle = config.site_config.global_site_name
-    // })
-    // console.log(info)
-    // if (token) {
-    //   this.truename = info.truename
-    //   request.userResource({}, 'disease_list').then((res) => {
-    //     this.disease_list = res.data.result.disease_list
-    //   })
-    // }
   },
   methods:{
      handleSelect({ item={}, key ='', keyPath=[],selectedKeys=[] }) {
@@ -207,7 +191,6 @@ export default {
           // console.log(this.$route.meta.title)
         }
       }
-      this.$store.commit('home/search_condition', [])
       if (!isNaN(Number(key))) {
         this.selectDiseaseId = key
         this.$router.push({
@@ -235,15 +218,11 @@ export default {
     // 退出登录
     async logoutHandle() {
       console.log(this)
-      this.$store.dispatch('user/logout').then(res => {
-        this.$confirm({
+      this.$store.dispatch('user/logout').then(() => {
+        this.$success({
           title:'退出',
           content: '退出成功',
-          showCancelButton: false,
           okText:'确认',
-          cancelText:' ',
-          closable:false,
-          showClose: false,
           onOk: () => {
             this.logoutRedirectControl()
           }
