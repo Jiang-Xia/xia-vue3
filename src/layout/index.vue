@@ -15,14 +15,14 @@
         mode="inline"
         @select="handleSelect"
       >
-        <template v-for="(item,index) in newNavlist">
+        <template v-for="(item,index) in permission_routes">
           <a-menu-item
-            v-if="!item.submenu"
+            v-if="item.children.length===1"
             :key="item.path"
             class="me-item"
             :index="index"
           >
-            <span>{{ item.cn }}</span>
+            <span>{{ item.meta.title }}</span>
           </a-menu-item>
 
           <a-sub-menu
@@ -31,7 +31,7 @@
             :index="item.path"
           >
             <template #title>
-              <span>{{ item.cn }}</span>
+              <span>{{ item.meta.title }}</span>
             </template>
             <a-menu-item
               v-for="(item2,index2) in item.submenu"
@@ -39,7 +39,7 @@
               class="submenu-item"
               :index="index2"
             >
-              <span>{{ item2.cn }}</span>
+              <span>{{ item2.meta.title }}</span>
             </a-menu-item>
           </a-sub-menu>
         </template>
@@ -101,147 +101,80 @@
   </a-layout>
 </template>
 <script>
-import {MenuUnfoldOutlined,MenuFoldOutlined} from '@ant-design/icons-vue'
-import { getToken, getInfo } from '@/utils/cookie'
-import { mapGetters } from 'vuex'
+import {useStore} from 'vuex'
+import { useRoute } from "vue-router";
+import router from '@/router'
+import store from '@/store'
+import {Modal} from 'ant-design-vue'
+import { getCode } from '@/utils/common'
+function handleSelect(options) {
+  // 切换导航清空条件
+  router.push({path: options.key})
+  return
+}
+  // 头像下拉命令
+function commandHandle(v) {
+  if (v === 2) {
+    logoutHandle()
+  } else {
+    router.push('/profile')
+  }
+}
+// 退出登录
+function logoutHandle() {
+  store.dispatch('user/logout').then(() => {
+    Modal.confirm({
+      title:'退出',
+      content: '退出成功',
+      okText:'确认',
+      onOk: () => {
+        logoutRedirectControl()
+      }
+    } )
+  })
+}
+// 退出跳转控制
+function logoutRedirectControl() {
+  const code = getCode()
+  switch (code) {
+    case 'gyfy_117' :
+      location.href = 'https://www.elungcare.com/sso/logout'
+      break
+    default:
+      location.reload()
+      break
+  }
+}
+import { MenuUnfoldOutlined,MenuFoldOutlined,DownOutlined,UserOutlined } from '@ant-design/icons-vue'
+import { reactive,computed, ref } from 'vue'
 export default {
   components: {
     MenuUnfoldOutlined,
-    MenuFoldOutlined
+    MenuFoldOutlined,
+    DownOutlined,
+    UserOutlined 
   },
-  data(){
+  setup(){
+    const store= useStore()
+    const route = useRoute()
+    /* computed */
+    // 选中高亮
+    const defaultActive = computed(()=> route.meta.activeMenu)
+    const openKeys = computed(()=>[route.meta.activeMenu])
+    /* state */
+    const collapsed = ref(false)
+    const selectedKeys =reactive(['1']) 
     return{
-    selectedKeys : ['1'],
-    collapsed : false,
-    truename : '',
-    disease_list: [],
-    selectDiseaseId: '',
+      permission_routes:store.getters.permission_routes.filter(v => !v.hidden),
+      userInfo:store.getters.userInfo,
+      globalConfigs:store.getters.globalConfigs,
+      defaultActive,
+      openKeys,
+      collapsed,
+      selectedKeys,
+      handleSelect,
+      commandHandle
     }
-  },
-  computed:{
-     ...mapGetters([
-      'permission_routes',
-      'userInfo',
-      'globalConfigs'
-    ]),
-    newNavlist () {
-    const list = this.permission_routes.filter(v => !v.hidden)
-        .map(v => {
-          return {
-            path: v.path,
-            cn: v.meta.title
-          }
-        })
-    const plist= this.disease_list
-    // console.log(plist)
-    const token = 'getToken()'
-    if (!token) {
-      return list.filter(v => v.path === '/dashboard')
-    } else {
-      return list.map(v => {
-        if (v.path === '/diseases'&&plist.length) {
-          v.submenu = plist.map(v2 => {
-            const obj = {
-              path: '/diseases/result-query?disease_id=' + String(v2.disease_id),
-              id: v2.disease_id,
-              icon: 'el-icon-document',
-              cn: v2.disease_name
-            }
-            return obj
-          })
-        }
-        return v
-      })
-    }
-  },
-  // 选中高亮
-   defaultActive () {
-    // console.log(this.$route.meta)
-    const path = this.$route.meta.activeMenu
-    // console.log(path);
-    if (path === '/diseases') {
-      return this.$route.query.disease_id
-    } else {
-      return path
-    }
-    
-  },
-   openKeys(){
-    const path = this.$route.meta.activeMenu
-    if (path === '/diseases') {
-        return [this.$route.query.disease_id]
-      } else {
-        return [path]
-      }
-  }
-  },
-    created () {
-  },
-  methods:{
-     handleSelect({ item={}, key ='', keyPath=[],selectedKeys=[] }) {
-      console.log(item,key, keyPath,selectedKeys)
-      // 切换导航清空条件
-      const list_= this.disease_list
-      // console.log(this.$route.name);
-      
-      if (this.$route.name === 'DiseaseQuery') {
-        const list = list_.filter(v => String(v.disease_id) === key)
-        if (list.length) {
-          this.$route.meta.title = list[0].disease_name
-          // console.log(this.$route.meta.title)
-        }
-      }
-      if (!isNaN(Number(key))) {
-        this.selectDiseaseId = key
-        this.$router.push({
-          path: '/diseases/result-query',
-          query: {
-            disease_id: key
-          }
-        })
-        this.$emit('click-specific', 1)
-      } else {
-        this.$router.push({
-          path: key
-        })
-      }
-      return
-    },
-        // 头像下拉命令
-    commandHandle(v) {
-      if (v === 2) {
-        this.logoutHandle()
-      } else {
-        this.$router.push('/profile')
-      }
-    },
-    // 退出登录
-    async logoutHandle() {
-      console.log(this)
-      this.$store.dispatch('user/logout').then(() => {
-        this.$success({
-          title:'退出',
-          content: '退出成功',
-          okText:'确认',
-          onOk: () => {
-            this.logoutRedirectControl()
-          }
-        } )
-      })
-    },
-    // 退出跳转控制
-    logoutRedirectControl() {
-      const code = this.$getCode()
-      this.token = ''
-      switch (code) {
-        case 'gyfy_117' :
-          location.href = 'https://www.elungcare.com/sso/logout'
-          break
-        default:
-          location.reload()
-          break
-      }
-    },
   }
 }
 </script>

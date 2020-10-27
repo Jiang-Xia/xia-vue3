@@ -4,14 +4,14 @@ const Profile = {
   path: '/profile',
   name: 'Profile',
   component: layout,
-  redirect: { path: '/profile/result-query' },
+  redirect: { path: '/profile/index' },
   meta: {
     title: '个人中心'
     // role: 'normal'
   },
   children: [
     {
-      path: 'result-query',
+      path: 'index',
       props: true,
       component: () => import('@/views/profile/index.vue'),
       meta: {

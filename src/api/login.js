@@ -1,6 +1,5 @@
 import $axios from '@/utils/request.js'
 import config from '@/api/config'
-import Mock from 'mockjs';
 export const handleLogin = async (data) => {
   return $axios.post(config.smaiuac_service_base_url + '/api/v2/token/user/make_token', data).then(res => res.data)
 }

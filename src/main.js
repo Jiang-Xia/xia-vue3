@@ -11,6 +11,7 @@ import '@/styles/base.scss'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import './permission'
 import '@/mock'
+import '@/icons'
 /*
   解决点解当前路由报错
 */
@@ -21,9 +22,15 @@ import '@/mock'
 //   return originalPush.call(this, location).catch(err => err)
 // }
 const app = createApp(App)
-app.use(Antd)
 app.use(Antd).use(store).use(router).mount('#app')
 
+/* 
+  全局组件注册
+*/
+import SvgIcon from '@/components/SvgIcon'
+import BreadCrumb from '@/components/breadcrumb'
+app.component('SvgIcon', SvgIcon)
+app.component('BreadCrumb', BreadCrumb)
 
 
 /*
@@ -35,8 +42,10 @@ import { getCode, getOpenType } from '@/utils/common'
 const globalProperties = app.config.globalProperties
 globalProperties.$getCode = getCode
 globalProperties.$getOpenType = getOpenType
-globalProperties.devtools = true    
+globalProperties.devtools = false    
 globalProperties.$getToken = getToken
 globalProperties.$axios = axios
 globalProperties.log = console.log
+
+export default app
 

@@ -4,14 +4,14 @@ const Dashboard = {
   path: '/dashboard',
   name: 'Dashboard',
   component: layout,
-  redirect: { path: '/dashboard/result-query' },
+  redirect: { path: '/dashboard/index' },
   meta: {
     title: '首页'
     // role: 'normal'
   },
   children: [
     {
-      path: 'result-query',
+      path: 'index',
       name:'DashboardResultQuery',
       component: () => import('@/views/dashboard/index.vue'),
       meta: {

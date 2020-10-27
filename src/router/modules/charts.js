@@ -4,14 +4,14 @@ const Charts = {
   path: '/charts',
   name: 'Charts',
   component: layout,
-  redirect: { path: '/charts/result-query' },
+  redirect: { path: '/charts/index' },
   meta: {
     title: '图表'
     // role: 'normal'
   },
   children: [
     {
-      path: 'result-query',
+      path: 'index',
       props: true,
       component: () => import('@/views/charts/index.vue'),
       meta: {

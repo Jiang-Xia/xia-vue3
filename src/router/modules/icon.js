@@ -4,14 +4,14 @@ const Icon = {
   path: '/icon',
   name: 'Icon',
   component: layout,
-  redirect: { path: '/icon/result-query' },
+  redirect: { path: '/icon/index' },
   meta: {
     title: '图标'
     // role: 'normal'
   },
   children: [
     {
-      path: 'result-query',
+      path: 'index',
       props: true,
       component: () => import('@/views/icon/index.vue'),
       meta: {

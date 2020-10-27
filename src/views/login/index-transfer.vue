@@ -24,14 +24,6 @@ export default {
       code: ''
     }
   },
-  // beforeRouteEnter: (to, from, next) => {
-  //   next((that) => {
-  //     if (getToken()) {
-  //       console.log('==========', to)
-  //       that.$router.push('/index')
-  //     }
-  //   })
-  // },
   computed: {
     currentComponent() {
       const code = this.code
@@ -44,7 +36,6 @@ export default {
   },
   created() {
     this.$store.dispatch('user/getGlobalConfigs').then(() => {
-      console.log(3333333333333)
       const code = this.$store.getters.hospCode
       this.code = code
       const obj = {

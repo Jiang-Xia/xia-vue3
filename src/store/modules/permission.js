@@ -21,7 +21,6 @@ function hasPermission(roles, route) {
  */
 export function filterAsyncRoutes(routes, roles) {
   const res = []
-
   routes.forEach(route => {
     const tmp = { ...route }
     if (hasPermission(roles, tmp)) {
@@ -46,42 +45,15 @@ const mutations = {
     state.routes = constantRoutes.concat(routes)
   }
 }
-// 全部需要过滤的特殊导航
-const filterList = ['/form']
-// 某个医院代号下 不过滤某些特殊导航
-const codeConfig = {
-  gyfy_117: ['/form']
-}
 const actions = {
   generateRoutes({ commit }, roles) {
-    let asyncRoutes_ = asyncRoutes
-    const { hosp_config, nav_config } = store.getters.globalConfigs
-    const code = hosp_config.global_hospital_code
-    const charts = nav_config.nav_charts_is_enable
-    const statistics = nav_config.nav_statistics_is_enable
-    if (!charts) {
-      asyncRoutes_ = asyncRoutes_.filter(v => v.path !== '/charts')
-    }
-    if (!statistics) {
-      asyncRoutes_ = asyncRoutes_.filter(v => v.path !== '/statistics')
-    }
     return new Promise(resolve => {
       let accessedRoutes
       if (roles.includes(2)) {
-        // 2 也要过滤某些特殊导航
-        accessedRoutes = asyncRoutes_.filter(v => !filterList.includes(v.path))
+        accessedRoutes = asyncRoutes
       } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes_, roles)
-        // 根据医院代号过滤特殊导航
-        if (codeConfig[code]) {
-          for (const item of codeConfig[code]) {
-            // 拉出数组 形成不过滤的条件
-            filterList.splice(filterList.indexOf(item), 1)
-          }
-        }
-        accessedRoutes = accessedRoutes.filter(v => !filterList.includes(v.path))
+        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
       }
-      // console.log(accessedRoutes)
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)
     })

@@ -54,7 +54,7 @@ export default {
           commit('SET_GLOBAL_CONFIGS', res[1].data)
           storage.local.set('global_config', res[1].data)
           resolve(res)
-        })
+        }).catch(err=>reject(err))
       })
     },
     getGlobalConfigs({ commit }) {
@@ -67,7 +67,7 @@ export default {
       })
     },
     // 用户退出
-    logout({ commit, state, dispatch }) {
+    logout({ commit, state }) {
       return new Promise((resolve, reject) => {
         handleLoginout({ access_token: state.token }).then((res) => {
           commit('SET_TOKEN', '')

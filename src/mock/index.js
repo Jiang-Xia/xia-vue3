@@ -1,6 +1,6 @@
 import Mock from 'mockjs'
 import * as mockData from './mock'
-import {makeToken} from './mock'
+// import {makeToken} from './mock'
 
 /**
  * @Description: 格式化mock 返回数据

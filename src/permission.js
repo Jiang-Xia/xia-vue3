@@ -19,23 +19,7 @@ router.beforeEach(async(to, from, next) => {
     if (whiteList.indexOf(to.path) !== -1) {
       next()
     } else {
-      // 有权限
-      const baseUrl = location.protocol + '//' + location.host + location.pathname
-      // 需要登录的 路由 跳转到首页进行登录
-      if (getOpenType() && to.fullPath.indexOf('paticent') !== -1) {
-        top.location.href = baseUrl + '#/login'
-        next()
-        // console.log(11111111111)
-      } else if (to.fullPath === '/') {
-        const redirect = router.history.pending.fullPath
-        top.location.href = baseUrl + '#/login' + `?redirect=${redirect}`
-        next()
-        // console.log(222222222)
-      } else {
-        // console.log(33333333333, baseUrl)
-        top.location.replace(baseUrl + '#/login' + `?redirect=${to.fullPath}`)
-        next(`/login?redirect=${to.path}`)
-      }
+      next(`/login?redirect=${to.path}`)
     }
   } else {
     // 已登录
@@ -52,9 +36,9 @@ router.beforeEach(async(to, from, next) => {
           const res = await store.dispatch('user/getUserInfo')
           const { user_type } = res[0]
           const accessRoutes = await store.dispatch('permission/generateRoutes', [user_type])
-          // router.addRoute(accessRoutes)
+          // console.log(accessRoutes)
           for(let item of accessRoutes){
-            router.addRoute(item)
+            router.addRoute('',item)
           }
           next({ ...to, replace: true })
         } catch (error) {

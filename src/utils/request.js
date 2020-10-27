@@ -1,7 +1,7 @@
 import axios from 'axios'
 // import router from '@/router/'
 import { getToken, removeToken, removeInfo } from '@/utils/cookie'
-import { getCode } from '@/utils/common'
+// import { getCode } from '@/utils/common'
 // import showXiaLogin from '@/components/xia-login/main'
 
 // import Vue from 'vue'
