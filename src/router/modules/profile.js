@@ -6,8 +6,8 @@ const Profile = {
   component: layout,
   redirect: { path: '/profile/index' },
   meta: {
-    title: '个人中心'
-    // role: 'normal'
+    title: '个人中心',
+    roles: [1,2]
   },
   children: [
     {

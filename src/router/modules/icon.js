@@ -6,16 +6,32 @@ const Icon = {
   component: layout,
   redirect: { path: '/icon/index' },
   meta: {
-    title: '图标'
-    // role: 'normal'
+    title: '图标',
+    roles: [1,2]
   },
   children: [
     {
       path: 'index',
-      props: true,
-      component: () => import('@/views/icon/index.vue'),
+      component: () => import('@/views/icon/index'),
       meta: {
-        activeMenu: '/icon'
+        activeMenu: '/icon/index',
+        title:'custom'
+      }
+    },
+    {
+      path: 'svg',
+      component: () => import('@/views/icon/svg'),
+      meta: {
+        activeMenu: '/icon/svg',
+        title:'SVG'
+      }
+    },
+    {
+      path: 'fa',
+      component: () => import('@/views/icon/fa'),
+      meta: {
+        activeMenu: '/icon/fa',
+        title:'Font Awesome'
       }
     }
   ]

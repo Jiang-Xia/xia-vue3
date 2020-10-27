@@ -34,8 +34,8 @@
               <span>{{ item.meta.title }}</span>
             </template>
             <a-menu-item
-              v-for="(item2,index2) in item.submenu"
-              :key="String(item2.id)"
+              v-for="(item2,index2) in item.children"
+              :key="item2.meta.activeMenu"
               class="submenu-item"
               :index="index2"
             >
@@ -108,6 +108,7 @@ import store from '@/store'
 import {Modal} from 'ant-design-vue'
 import { getCode } from '@/utils/common'
 function handleSelect(options) {
+  console.log(options.key)
   // 切换导航清空条件
   router.push({path: options.key})
   return

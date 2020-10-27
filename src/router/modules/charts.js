@@ -6,8 +6,8 @@ const Charts = {
   component: layout,
   redirect: { path: '/charts/index' },
   meta: {
-    title: '图表'
-    // role: 'normal'
+    title: '图表',
+    roles: [1,2]
   },
   children: [
     {

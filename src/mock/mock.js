@@ -12,8 +12,8 @@ export const globalConfigs = function () {
     "nav_statistics_is_enable":true
   },
     site_config:{
-    "global_site_name":"xia-vue3",
-    "global_site_title":"xia-vue3",
+    "global_site_name":"夏",
+    "global_site_title":"夏",
     "patient_detail_open_at_dialog":true
   },
   }

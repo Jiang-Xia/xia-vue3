@@ -6,8 +6,8 @@ const Dashboard = {
   component: layout,
   redirect: { path: '/dashboard/index' },
   meta: {
-    title: '首页'
-    // role: 'normal'
+    title: '首页',
+    roles: [1,2]
   },
   children: [
     {
