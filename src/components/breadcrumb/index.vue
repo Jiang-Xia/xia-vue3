@@ -2,7 +2,7 @@
   <a-breadcrumb :separator="separator">
     <a-breadcrumb-item>
       <router-link to="/dashboard">
-        <svg-icon icon-class="dashboard" />
+        <svg-icon icon-class="home" />
       </router-link>
     </a-breadcrumb-item>
     <a-breadcrumb-item
