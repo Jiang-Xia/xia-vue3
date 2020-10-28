@@ -1,6 +1,7 @@
 <template>
   <div class="research-container">
-    research
+    <BreadCrumb />
+    charts
   </div>
 </template>
 

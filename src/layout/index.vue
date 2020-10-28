@@ -22,7 +22,8 @@
             class="me-item"
             :index="index"
           >
-            <span>{{ item.meta.title }}</span>
+            <svg-icon :icon-class="item.path.substring(1)" />
+            <span style="margin-left:0.5rem;">{{ item.meta.title }}</span>
           </a-menu-item>
 
           <a-sub-menu
@@ -31,7 +32,8 @@
             :index="item.path"
           >
             <template #title>
-              <span>{{ item.meta.title }}</span>
+              <svg-icon :icon-class="item.path.substring(1)" />
+              <span style="margin-left:0.5rem;">{{ item.meta.title }}</span>
             </template>
             <a-menu-item
               v-for="(item2,index2) in item.children"
