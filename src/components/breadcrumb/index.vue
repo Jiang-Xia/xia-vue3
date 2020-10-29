@@ -18,23 +18,36 @@
 <script>
 import { useRoute } from "vue-router";
 import router from '@/router'
-import {computed} from 'vue';
+import {computed,watch,onMounted, ref} from 'vue';
 export default {
     name:'BreadCrumb',
-    setup(){
+    setup(props,ctx){
         const route = useRoute()
         const goto = (item)=>{
             router.push(item.path)
         }
-        const separator = computed(()=>{
-          if(route.matched.length>1){
+        let matcheds = ref(route.matched.filter(v=>v.path!=='/dashboard'))
+        const getSeparator = (matcheds)=>{
+          if(matcheds.length>1){
             return '/'
           }else{
             return ''
           }
+        }
+        const separator = ref(getSeparator(matcheds))
+        watch(
+          ()=>route,
+          (n)=>{
+            // console.log('=========',n.matched)
+            matcheds.value = n.matched.filter(v=>v.path!=='/dashboard')
+            separator.value = getSeparator(n.matched)
+          },
+          {
+          immediate: true,
         })
+
         return {
-            routes:route.matched.filter(v=>v.path!=='/dashboard'),
+            routes:matcheds,
             goto:goto,
             separator
         }

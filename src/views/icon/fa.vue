@@ -1,6 +1,5 @@
 <template>
   <div class="disease-container">
-    <BreadCrumb />
     <svg-icon icon-class="approval-config" />
   </div>
 </template>

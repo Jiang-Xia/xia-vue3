@@ -9,8 +9,8 @@
         {{ globalConfigs.site_config.global_site_title }}
       </div>
       <a-menu
+        :selected-keys="defaultActive"
         :inline-collapsed="collapsed"
-        :selected-keys="[defaultActive]"
         theme="dark"
         mode="inline"
         @select="handleSelect"
@@ -94,10 +94,20 @@
           </a-dropdown>
         </div>
       </a-layout-header>
-      <a-layout-content
-        :style="{ margin: '24px 16px',background: '#fff', minHeight: '280px' }"
-      >
-        <router-view />
+      <a-layout-content>
+        <a-layout>
+          <a-layout-header
+            v-if="$route.path.indexOf('dashboard')===-1"
+            :style="{backgroundColor:'#fff',borderTop:'1px solid #ccc'}"
+          >
+            <!-- <BreadCrumb /> -->
+          </a-layout-header>
+          <a-layout-content
+            :style="{ margin: '24px 16px',background: '#fff', minHeight: '280px' }"
+          >
+            <router-view />
+          </a-layout-content>
+        </a-layout>
       </a-layout-content>
     </a-layout>
   </a-layout>
@@ -109,8 +119,10 @@ import router from '@/router'
 import store from '@/store'
 import {Modal} from 'ant-design-vue'
 import { getCode } from '@/utils/common'
+import { MenuUnfoldOutlined,MenuFoldOutlined,DownOutlined,UserOutlined } from '@ant-design/icons-vue'
+import { reactive,computed, ref, watchEffect,watch } from 'vue'
 function handleSelect(options) {
-  console.log(options.key)
+  // console.log(options.key)
   // 切换导航清空条件
   router.push({path: options.key})
   return
@@ -148,8 +160,6 @@ function logoutRedirectControl() {
       break
   }
 }
-import { MenuUnfoldOutlined,MenuFoldOutlined,DownOutlined,UserOutlined } from '@ant-design/icons-vue'
-import { reactive,computed, ref } from 'vue'
 export default {
   components: {
     MenuUnfoldOutlined,
@@ -162,7 +172,10 @@ export default {
     const route = useRoute()
     /* computed */
     // 选中高亮
-    const defaultActive = computed(()=> route.meta.activeMenu)
+    const defaultActive = computed(()=> {
+      console.log(route.meta)
+      return [route.meta.activeMenu]
+    })
     const openKeys = computed(()=>[route.meta.activeMenu])
     /* state */
     const collapsed = ref(false)
