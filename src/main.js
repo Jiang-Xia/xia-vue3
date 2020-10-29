@@ -12,6 +12,9 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import './permission'
 import '@/mock'
 import '@/icons'
+
+/* 组件 */
+import XiaUi from '@/components/xia-ui/src'
 /*
   解决点解当前路由报错
 */
@@ -22,6 +25,7 @@ import '@/icons'
 //   return originalPush.call(this, location).catch(err => err)
 // }
 const app = createApp(App)
+app.use(XiaUi)
 app.use(Antd).use(store).use(router).mount('#app')
 
 /* 
