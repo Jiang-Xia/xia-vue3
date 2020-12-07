@@ -16,8 +16,8 @@ function formattingData (data, code = '00000',msg) {
   }
 }
 
-Mock.mock('/api/v2/user_config/global_configs',formattingData(mockData.globalConfigs()))
-Mock.mock('/api/v2/token/user/make_token',formattingData(mockData.makeToken()))
-Mock.mock('/api/v2/token/user/destroy_token',formattingData(mockData.destoryToken()))
-Mock.mock('/api/v2/token/user/token_profile',formattingData(mockData.tokenProfile()))
-Mock.mock('/mock/news',formattingData(mockData.produceNewsData()))
+Mock.mock('/api/v2/user_config/global_configs',(ops)=> formattingData(mockData.globalConfigs(ops)))
+Mock.mock('/api/v2/token/user/make_token',(ops)=> formattingData(mockData.makeToken(ops)))
+Mock.mock('/api/v2/token/user/destroy_token',(ops)=>formattingData(mockData.destoryToken(ops)))
+Mock.mock('/api/v2/token/user/token_profile',(ops)=>formattingData(mockData.tokenProfile(ops)))
+Mock.mock('/mock/news',(ops)=>formattingData(mockData.produceNewsData(ops)))

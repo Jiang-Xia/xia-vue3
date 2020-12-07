@@ -32,6 +32,9 @@ app.use(Antd).use(store).use(router).mount('#app')
   全局组件注册
 */
 import SvgIcon from '@/components/SvgIcon'
+// 自动注册图表组件
+import {componentfn} from '@/components/charts'
+componentfn(app)
 import BreadCrumb from '@/components/breadcrumb'
 app.component('SvgIcon', SvgIcon)
 app.component('BreadCrumb', BreadCrumb)

@@ -16,9 +16,9 @@
   </a-breadcrumb>
 </template>
 <script>
-import { useRoute } from "vue-router";
+import { useRoute } from 'vue-router'
 import router from '@/router'
-import {computed,watch,onMounted, ref} from 'vue';
+import {computed,watch,onMounted, ref} from 'vue'
 export default {
     name:'BreadCrumb',
     setup(props,ctx){

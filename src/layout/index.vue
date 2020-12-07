@@ -12,7 +12,7 @@
         :selected-keys="defaultActive"
         :inline-collapsed="collapsed"
         theme="dark"
-        mode="inline"
+        :mode="!collapsed?'inline':'vertical'"
         @select="handleSelect"
       >
         <template v-for="(item,index) in permission_routes">
@@ -23,9 +23,11 @@
             :index="index"
           >
             <svg-icon :icon-class="item.path.substring(1)" />
-            <span style="margin-left:0.5rem;">{{ item.meta.title }}</span>
+            <span
+              v-show="!collapsed"
+              style="margin-left:0.5rem;"
+            >{{ item.meta.title }}</span>
           </a-menu-item>
-
           <a-sub-menu
             v-else
             :key="item.path"
@@ -33,7 +35,10 @@
           >
             <template #title>
               <svg-icon :icon-class="item.path.substring(1)" />
-              <span style="margin-left:0.5rem;">{{ item.meta.title }}</span>
+              <span
+                v-show="!collapsed"
+                style="margin-left:0.5rem;"
+              >{{ item.meta.title }}</span>
             </template>
             <a-menu-item
               v-for="(item2,index2) in item.children"
@@ -95,26 +100,23 @@
         </div>
       </a-layout-header>
       <a-layout-content>
-        <a-layout>
-          <a-layout-header
-            v-if="$route.path.indexOf('dashboard')===-1"
-            :style="{backgroundColor:'#fff',borderTop:'1px solid #ccc'}"
+        <router-view v-slot="{ Component }">
+          <transition
+            name="fade-transform"
+            mode="out-in"
           >
-            <!-- <BreadCrumb /> -->
-          </a-layout-header>
-          <a-layout-content
-            :style="{ margin: '24px 16px',background: '#fff', minHeight: '280px' }"
-          >
-            <router-view />
-          </a-layout-content>
-        </a-layout>
+            <component
+              :is="Component"
+            />
+          </transition>
+        </router-view>
       </a-layout-content>
     </a-layout>
   </a-layout>
 </template>
 <script>
 import {useStore} from 'vuex'
-import { useRoute } from "vue-router";
+import { useRoute } from 'vue-router'
 import router from '@/router'
 import store from '@/store'
 import {Modal} from 'ant-design-vue'
@@ -173,8 +175,11 @@ export default {
     /* computed */
     // 选中高亮
     const defaultActive = computed(()=> {
-      console.log(route.meta)
+      // console.log(route.meta)
       return [route.meta.activeMenu]
+    })
+    const key = computed(()=>{
+      return route.path
     })
     const openKeys = computed(()=>[route.meta.activeMenu])
     /* state */
@@ -189,7 +194,8 @@ export default {
       collapsed,
       selectedKeys,
       handleSelect,
-      commandHandle
+      commandHandle,
+      key
     }
   }
 }

@@ -53,10 +53,10 @@ export default {
   },
   watch:{
     onAntInputChanged(n, o) {
-      console.log(n,o);
+      console.log(n,o)
     },
     onNativeInputChanged(n, o) {
-      console.log(n,o);
+      console.log(n,o)
       // 改名
     }
   },
@@ -68,7 +68,7 @@ export default {
   methods:{
     clickHandle(){
     // XiaLogin.init()
-      this.antAndNative ='打开';
+      this.antAndNative ='打开'
     },
     changeHandle(){
 

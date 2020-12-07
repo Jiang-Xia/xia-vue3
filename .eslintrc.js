@@ -7,7 +7,18 @@ module.exports = {
   },
   extends: ['plugin:vue/recommended', 'eslint:recommended'],
   rules: {
+    'vue/max-attributes-per-line': [2, {
+      'singleline': 10,
+      'multiline': {
+        'max': 1,
+        'allowFirstLine': false
+      }
+    }],
+    'quotes': [2, 'single', {
+      'avoidEscape': true,
+      'allowTemplateLiterals': true
+    }],
+    'semi': [2, 'never'],
     "camelcase": "off",
-    "@typescript-eslint/camelcase": 0
   }
 }

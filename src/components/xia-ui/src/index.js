@@ -10,7 +10,7 @@ const install = function(Vue,options={}){
 }
 /* 页面引入时 */
 if (typeof window !== 'undefined' && window.Vue) {
-    install(window.Vue);
+    install(window.Vue)
 }
 export default{
     install,

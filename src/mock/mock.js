@@ -1,32 +1,45 @@
 import Mock from 'mockjs'
+// 当前用户信息
+const userInfo = {
+    last_login_time: '',
+    status: 1,
+    truename: '',
+    uid: 13,
+    user_type: 1,
+    username: '',
+}
+
 // 全局配置
 export const globalConfigs = function () {
   const data = {
-    approval_config:{"data_export_approval_is_enable":true},
-    hosp_config:{"global_hospital_code":"demo_000",
-    "global_hospital_name":"演示医院",
-    "global_hospital_org_code":"demo_000"
+    approval_config:{'data_export_approval_is_enable':true},
+    hosp_config:{'global_hospital_code':'demo_000',
+    'global_hospital_name':'演示医院',
+    'global_hospital_org_code':'demo_000'
   },
     nav_config:{
-    "nav_charts_is_enable":true,
-    "nav_statistics_is_enable":true
+    'nav_charts_is_enable':true,
+    'nav_statistics_is_enable':true
   },
     site_config:{
-    "global_site_name":"夏",
-    "global_site_title":"夏",
-    "patient_detail_open_at_dialog":true
+    'global_site_name':'夏',
+    'global_site_title':'夏',
+    'patient_detail_open_at_dialog':true
   },
   }
   return data
 }
 // 获取token
-export const makeToken = function () {
-    const data = {
-        access_token: "123",
+export const makeToken = function (data) {
+  const body = JSON.parse(data.body)
+  userInfo.truename = body.username
+  userInfo.username = body.username
+    const res = {
+        access_token: '123',
         expires_in: 42899,
-        token_type: "Bearer"
+        token_type: 'Bearer'
     }
-    return data
+    return res
 }
 // 退出
 export const destoryToken = function () {
@@ -34,14 +47,7 @@ export const destoryToken = function () {
 }
 // 用户信息
 export const tokenProfile = function () {
-    const data = {
-        last_login_time: "",
-        status: 1,
-        truename: "xia_0001",
-        uid: 13,
-        user_type: 1,
-        username: "xia_0001",
-    }
+    const data = userInfo
     return data
 }
 export // 获取 mock.Random 对象
